@@ -1,6 +1,6 @@
 # EVA
 
-an Energy Visualisation App for smart meter data from DCC network.
+An Energy Visualisation App for smart meter data from DCC network.
 
 # Purpose of this web app
 
