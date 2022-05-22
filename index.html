@@ -29,7 +29,7 @@
         <a class="nav-link active" aria-current="page" href="#">Home</a>
       </li>
       </li>
-      <li class="nav-item"> vv
+      <li class="nav-item"> 
         <a class="nav-link" href="#">Consumption</a>
       </li>
       <li class="nav-item">
@@ -41,27 +41,10 @@
   <!-- Chart canvas and associated buttons -->
   <div class="container">
     <!-- buttons along top of chart -->
-    <div class="container">
-      <!-- choose the view for the chart -->
-      <div>
-        <select class="form-select form-select-sm" aria-label=".form-select-sm">
-          <option value="Daily View">Daily View</option>
-          <option value="Weekly View">Weekly View</option>
-          <option value="Monthly View">Monthly View</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- chart canvas -->
-    <div class="container">
-      <canvas id="myChart"></canvas>
-    </div>
-
-    <!-- buttons along bottom of chart -->
-    <div class="container">
-      <div class="row">
-        <!-- left buttons -->
-        <div class="col-sm-4">
+	<div class="row">
+    <!-- Date picker to choose which date to show -->
+	<div class="container">
+      <div class="col-sm-4">
           <div class="row g-2">
             <div class="col-sm">
               <div class="form-floating">
@@ -76,10 +59,28 @@
               </div>
             </div>
           </div>
-        </div>
+	  </div>
+		
+		<!-- choose the view for the chart -->
+      <div>
+        <select class="form-select form-select-sm" aria-label=".form-select-sm">
+          <option value="Daily View">Daily View</option>
+          <option value="Weekly View">Weekly View</option>
+          <option value="Monthly View">Monthly View</option>
+        </select>
+      </div>
+  </div>
+    </div>
 
+    <!-- chart canvas -->
+    <div class="container">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- buttons along bottom of chart -->
+    <div class="container">
         <!-- right buttons -->
-        <div class="col-md-4 offset-md-4">
+        <div class="d-flex justify-content-end">
           <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group me-2" role="group" aria-label="Untility group">
               <button type="button" class="btn btn-light">&laquo; Previous</button>
@@ -90,7 +91,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
 
     <footer class="container">
