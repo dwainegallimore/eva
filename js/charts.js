@@ -2,6 +2,7 @@ updateData();
 
 async function updateData() {
     const datapoints = await getCurrentData();
+    console.log(datapoints);
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',
@@ -50,9 +51,12 @@ async function getCurrentData() {
     currentTable.forEach(row => {
         const column = row.split(',');
         const dateTime = column[0].substring(1).slice(0, -1);
-        //console.log(dateTime);
+        // const dateTimeConvert = new Date(dateTime);
+        // console.log(dateTimeConvert);
         const currentUsage = column[1].substring(1).slice(0, -1);
         labels.push(new Date(dateTime));
+        // labels.push(dateTimeConvert);
+        // labels.push(dateTime);
         currentReadings.push(currentUsage);
         //console.log(dateTime);
         //console.log(currentReadings);
