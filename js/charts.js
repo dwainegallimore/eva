@@ -8,7 +8,7 @@ async function updateData() {
         data: {
             labels: datapoints.labels,
             datasets: [{
-                label: 'Electrical Consumtion kwh',
+                label: 'Electrical Consumtion (kwh)',
                 data: datapoints.currentReadings,
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.2)'
