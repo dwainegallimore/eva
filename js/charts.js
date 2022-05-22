@@ -38,7 +38,7 @@ async function getCurrentData() {
     const currentReadings = [];
 
     //get electricity data
-    const urlCurr = '../data/electricity/consumption/1/test.csv';
+    const urlCurr = '/data/electricity/consumption/1/test.csv';
     const currentFile = await fetch(urlCurr);
     const currentData = await currentFile.text();
     // console.log(currentData);
