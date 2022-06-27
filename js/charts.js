@@ -54,9 +54,9 @@ async function getCurrentData() {
         // const dateTimeConvert = new Date(dateTime);
         // console.log(dateTimeConvert);
         const currentUsage = column[1].substring(1).slice(0, -1);
-        // labels.push(new Date(dateTime));
+        labels.push(new Date(dateTime));
         // labels.push(dateTimeConvert);
-        labels.push(dateTime);
+        // labels.push(dateTime);
         currentReadings.push(currentUsage);
         //console.log(dateTime);
         //console.log(currentReadings);
@@ -66,42 +66,19 @@ async function getCurrentData() {
     return { labels, currentReadings };
 };
 
+// Function to filter the data
+function filterData(){
+    const labels2 = [...labels];
+    // console.log(labels2);
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
 
+    // get the index number in array
+    const indexStartDate = labels2.indexOf(startDate.value);
+    const indexEndDate = labels2.indexOf(endDate.value);
 
-// Below code fot dummy data on the chart.
+    //slice the array to show only selected dates
+    const filterDate = labels2.slice(indexStartDate, indexEndDate + 1);
 
-// const ctx = document.getElementById('myChart').getContext('2d');
-// const myChart = new Chart(ctx, {
-//     type: 'line',
-//     data: {
-//         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-//         datasets: [{
-//             label: 'Current in kwh',
-//             data: [6, 9, 3, 5, 2, 3, 4, 8],
-//             backgroundColor: [
-//                 'rgba(255, 99, 132, 1)'
-//             ], 
-//             borderColor: [
-//                 'rgba(255, 99, 132, 1)'
-//             ],
-//             tension: 0.4
-//         },{
-//             label: 'Gas in m³',
-//             data: [5, 8, 6, 3, 4, 6, 3, 2],
-//             backgroundColor: [
-//                 'rgba(54, 162, 235, 1)'
-//             ],
-//             borderColor: [
-//                 'rgba(54, 162, 235, 1)'
-//             ],
-//             tension: 0.4
-//         }]
-//     },
-//     options: {
-//         scales: {
-//             y: {
-//                 beginAtZero: true
-//             }
-//         }
-//     }
-// });
+    //replace labels in chart
+}
