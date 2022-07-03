@@ -1,7 +1,35 @@
 updateData();
 
-async function updateData() {
+// Function to get data and save to json
+
+function getData(){
+    // retrieve data from CSV file
+
+    // encode to json
+};
+
+// Function to filter the data
+function filterData(){
+    //Call function to get data from CSV.
     const datapoints = await getCurrentData();
+    const labels2 = [...datapoints.labels];
+    // console.log(labels2);
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+
+    // get the index number in array
+    const indexStartDate = labels2.indexOf(startDate.value);
+    const indexEndDate = labels2.indexOf(endDate.value);
+
+    //slice the array to show only selected dates
+    const filterDate = labels2.slice(indexStartDate, indexEndDate + 1);
+
+    //replace labels in chart
+};
+
+// function to update chart with data
+async function updateData() {
+    
     // console.log(datapoints);
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
@@ -65,20 +93,3 @@ async function getCurrentData() {
     //return values to the calling function
     return { labels, currentReadings };
 };
-
-// Function to filter the data
-function filterData(){
-    const labels2 = [...labels];
-    // console.log(labels2);
-    const startDate = document.getElementById('startDate');
-    const endDate = document.getElementById('endDate');
-
-    // get the index number in array
-    const indexStartDate = labels2.indexOf(startDate.value);
-    const indexEndDate = labels2.indexOf(endDate.value);
-
-    //slice the array to show only selected dates
-    const filterDate = labels2.slice(indexStartDate, indexEndDate + 1);
-
-    //replace labels in chart
-}
