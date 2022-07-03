@@ -3,10 +3,6 @@ updateData();
 // Function to get data and save to json
 
 async function getData(){
-
-    const dateTime = [];
-    const elecDatapoints = [];
-    const gasDatapoints = [];
     
     const electricUrl = '/data/electricity/consumption/1/20220206-20220507.csv';
     const gasUrl = '/data/gas/consumption/1/20220206-20220507.csv';
@@ -14,29 +10,49 @@ async function getData(){
     // retrieve data from CSV file
     const elecFile = await fetch(electricUrl);
     const elecData = await elecFile.text();
-    // console.log(elecData);
 
     const gasFile = await fetch(gasUrl);
     const gasData = await gasFile.text();
-    // console.log(gasData);
+
+    // Maybe i should create a function to get the text file slice it and put the data into an array.
+
+    function datapoints(file){
+        
+        const results = [];
+        
+        const dataTable = [file.split("\n").slice(1)];
+
+        dataTable.forEach(row => {
+            const column = row.split(',');
+            const data1 = column[0].substring(1).slice(0, -1);
+            const data2 = column[1].substring(1).slice(0, -1);
+            results.push(new Date(data1));
+            results.push(data2);
+        });
+
+        return results;
+    };
+
+    const data = datapoints(elecFile);
+
+    console.log(data);
 
     // slice data into table
-    const elecTable = elecData.split("\n").slice(1);
-    const gasTable = gasData.split("\n").slice(1);
+    // const elecTable = [elecData.split("\n").slice(1)];
 
-    // extract header and current data and add to array
-    elecTable.forEach(row => {
-        const column = row.split(',');
-        const header = column[0].substring(1).slice(0, -1);
-        const elecReadings = column[1].substring(1).slice(0, -1);
-        dateTime.push(new Date(header));
-        elecDatapoints.push(elecReadings);
-    });
 
-    console.log(dateTime);
-    console.log(elecDatapoints);
-    console.log(gasDatapoints);
-    // encode to json
+
+
+    // // extract header and current data and add to array
+    // combined2.forEach(row => {
+    //     const column = row.split(',');
+    //     const header = column[0].substring(1).slice(0, -1);
+    //     const elecReadings = column[1].substring(1).slice(0, -1);
+    //     dateTime.push(new Date(header));
+    //     elecDatapoints.push(elecReadings);
+    // });
+
+
 };
 
 // Function to filter the data
