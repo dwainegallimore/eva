@@ -2,59 +2,85 @@ updateData();
 
 // Function to get data and save to json
 
-function getData(){
-    // retrieve data from CSV file
+async function getData(){
 
+    const dateTime = [];
+    const elecDatapoints = [];
+    const gasDatapoints = [];
+    
+    const electricUrl = '/data/electricity/consumption/1/20220206-20220507.csv';
+    const gasUrl = '/data/gas/consumption/1/20220206-20220507.csv';
+
+    // retrieve data from CSV file
+    const elecFile = await fetch(electricUrl);
+    const elecData = await elecFile.text();
+    // console.log(elecData);
+
+    const gasFile = await fetch(gasUrl);
+    const gasData = await gasFile.text();
+    // console.log(gasData);
+
+    // slice data into table
+    const elecTable = elecData.split("\n").slice(1);
+    const gasTable = gasData.split("\n").slice(1);
+
+    // extract header and current data and add to array
+    elecTable.forEach(row => {
+        const column = row.split(',');
+        const header = column[0].substring(1).slice(0, -1);
+        const elecReadings = column[1].substring(1).slice(0, -1);
+        dateTime.push(new Date(header));
+        elecDatapoints.push(elecReadings);
+    });
+
+    console.log(dateTime);
+    console.log(elecDatapoints);
+    console.log(gasDatapoints);
     // encode to json
 };
 
 // Function to filter the data
-function filterData(){
-    //Call function to get data from CSV.
-    const datapoints = await getCurrentData();
-    const labels2 = [...datapoints.labels];
-    // console.log(labels2);
-    const startDate = document.getElementById('startDate');
-    const endDate = document.getElementById('endDate');
+// function filterData() {
+//     //Call function to get data from CSV.
+//     const datapoints = await getCurrentData();
+//     const labels2 = [...datapoints.labels];
+//     // console.log(labels2);
+//     const startDate = document.getElementById('startDate');
+//     const endDate = document.getElementById('endDate');
 
-    // get the index number in array
-    const indexStartDate = labels2.indexOf(startDate.value);
-    const indexEndDate = labels2.indexOf(endDate.value);
+//     // get the index number in array
+//     const indexStartDate = labels2.indexOf(startDate.value);
+//     const indexEndDate = labels2.indexOf(endDate.value);
 
-    //slice the array to show only selected dates
-    const filterDate = labels2.slice(indexStartDate, indexEndDate + 1);
+//     //slice the array to show only selected dates
+//     const filterDate = labels2.slice(indexStartDate, indexEndDate + 1);
 
-    //replace labels in chart
-};
+//     //replace labels in chart
+// };
 
-// function to update chart with data
+// function to update chart with temporary data
 async function updateData() {
-    
-    // console.log(datapoints);
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: datapoints.labels,
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'],
             datasets: [{
-                label: 'Electrical Consumtion (kwh)',
-                data: datapoints.currentReadings,
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3, 6],
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.2)'
                 ],
                 borderColor: [
                     'rgba(54, 162, 235, 1)'
                 ],
-                tension: 0.4
+                borderWidth: 1
             }]
         },
         options: {
             scales: {
-                x: {
-                    type: 'time',
-                    time: {
-                        unit: 'hour',
-                    }
+                y: {
+                    beginAtZero: true
                 }
             }
         }
@@ -62,34 +88,16 @@ async function updateData() {
 };
 
 // Function to get energy data and parse it.
-async function getCurrentData() {
-    const labels = [];
-    const currentReadings = [];
-
-    //get electricity data
-    const urlCurr = '/data/electricity/consumption/1/test.csv';
-    const currentFile = await fetch(urlCurr);
-    const currentData = await currentFile.text();
-    // console.log(currentData);
-
-    //Sort out text data from the csv file
-    const currentTable = currentData.split("\n").slice(1);
-    //console.log(currentTable);
-
-    currentTable.forEach(row => {
-        const column = row.split(',');
-        const dateTime = column[0].substring(1).slice(0, -1);
-        // const dateTimeConvert = new Date(dateTime);
-        // console.log(dateTimeConvert);
-        const currentUsage = column[1].substring(1).slice(0, -1);
-        labels.push(new Date(dateTime));
-        // labels.push(dateTimeConvert);
-        // labels.push(dateTime);
-        currentReadings.push(currentUsage);
-        //console.log(dateTime);
-        //console.log(currentReadings);
-    });
-
-    //return values to the calling function
-    return { labels, currentReadings };
-};
+// function for linked date picker
+// $(function () {
+//     $('#startdate').datetimepicker();
+//     $('#enddate').datetimepicker({
+// useCurrent: false //Important! See issue #1075
+// });
+//     $("#startdate").on("dp.change", function (e) {
+//         $('#enddate').data("DateTimePicker").minDate(e.date);
+//     });
+//     $("#enddate").on("dp.change", function (e) {
+//         $('#startdate').data("DateTimePicker").maxDate(e.date);
+//     });
+// });
