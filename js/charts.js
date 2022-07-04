@@ -2,8 +2,8 @@ updateData();
 
 // Function to get data and save to json
 
-async function getData(){
-    
+async function getData() {
+
     const electricUrl = '/data/electricity/consumption/1/20220206-20220507.csv';
     const gasUrl = '/data/gas/consumption/1/20220206-20220507.csv';
 
@@ -16,42 +16,28 @@ async function getData(){
 
     // Maybe i should create a function to get the text file slice it and put the data into an array.
 
-    function datapoints(file){
-        
-        const results = [];
-        
-        const dataTable = [file.split("\n").slice(1)];
+    const elecDp = elecData.split(/\r?\n/);
+    const gasDp = gasData.split(/\r?\n/);
 
-        dataTable.forEach(row => {
-            const column = row.split(',');
-            const data1 = column[0].substring(1).slice(0, -1);
-            const data2 = column[1].substring(1).slice(0, -1);
-            results.push(new Date(data1));
-            results.push(data2);
-        });
+    // map first array and concat the gas and electrical data into one array
+    const datapoints = elecDp.map((o, i) => o.concat(",", gasDp[i]));
 
-        return results;
-    };
+    datapoints.forEach(row => {
+        const column = row.split(',');
+        const column3 = column.splice(2, 1);
 
-    const data = datapoints(elecFile);
+        const time = column[0].substring(1).slice(0, -1);
+        const elec = column[1].substring(1).slice(0, -1);
+        const gas = column[1].substring(1).slice(0, -1);
+    });
 
-    console.log(data);
-
-    // slice data into table
-    // const elecTable = [elecData.split("\n").slice(1)];
-
-
-
-
-    // // extract header and current data and add to array
-    // combined2.forEach(row => {
-    //     const column = row.split(',');
-    //     const header = column[0].substring(1).slice(0, -1);
-    //     const elecReadings = column[1].substring(1).slice(0, -1);
-    //     dateTime.push(new Date(header));
-    //     elecDatapoints.push(elecReadings);
-    // });
-
+    //     dataTable.forEach(row => {
+    //         const column = row.split(',');
+    //         const data1 = column[0].substring(1).slice(0, -1);
+    //         const data2 = column[1].substring(1).slice(0, -1);
+    //         results.push(new Date(data1));
+    //         results.push(data2);
+    //     });
 
 };
 
@@ -80,7 +66,7 @@ async function updateData() {
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'],
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             datasets: [{
                 label: '# of Votes',
                 data: [12, 19, 3, 5, 2, 3, 6],
