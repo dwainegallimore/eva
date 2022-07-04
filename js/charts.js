@@ -3,6 +3,7 @@ updateData();
 // Function to get data and save to json
 
 async function getData() {
+    const data = [];
 
     const electricUrl = '/data/electricity/consumption/1/20220206-20220507.csv';
     const gasUrl = '/data/gas/consumption/1/20220206-20220507.csv';
@@ -26,20 +27,19 @@ async function getData() {
         const column = row.split(',');
         const column3 = column.splice(2, 1);
 
-        const time = column[0].substring(1).slice(0, -1);
-        const elec = column[1].substring(1).slice(0, -1);
-        const gas = column[1].substring(1).slice(0, -1);
+        const col1 = column[0].substring(1).slice(0, -1);
+        const col2 = column[1].substring(1).slice(0, -1);
+        const col3 = column[1].substring(1).slice(0, -1);
+        key.push(new Date(col1));
+        elec.push(col2);
+        gas.push(col3);
+
     });
 
-    //     dataTable.forEach(row => {
-    //         const column = row.split(',');
-    //         const data1 = column[0].substring(1).slice(0, -1);
-    //         const data2 = column[1].substring(1).slice(0, -1);
-    //         results.push(new Date(data1));
-    //         results.push(data2);
-    //     });
+    return { labels, elec, gas };
 
 };
+
 
 // Function to filter the data
 // function filterData() {
